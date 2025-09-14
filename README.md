@@ -87,6 +87,6 @@ A GitHub Actions workflow is configured to build and test the project on every p
 *   [.NET 9](https://dotnet.microsoft.com/download/dotnet/9.0)
 *   [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/)
 *   [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
-*   [Testcontainers for .NET](https://testcontainers.com/guides/getting-started-with-testcontainers-for-net/)
+*   [Testcontainers for .NET](https://dotnet.testcontainers.org/)
 *   [xUnit](https://xunit.net/)
 *   [Fluent Assertions](https://fluentassertions.com/)
