@@ -7,16 +7,16 @@ namespace Product.Api.Tests
 {
     public class SqlServerContainerFixture : IAsyncLifetime
     {
-        public MsSqlContainer Container { get; private set; } = default!;
+        private MsSqlContainer? _container { get; set; }
         public string ConnectionString { get; private set; } = string.Empty;
 
         public async Task InitializeAsync()
         {
-            Container = new MsSqlBuilder()
-            .WithPassword("YourStrong!Passw0rd")
-            .Build();
+            _container = new MsSqlBuilder().Build();
 
-            await Container.StartAsync();
+            await _container.StartAsync();
+
+            ConnectionString = _container.GetConnectionString();
 
             var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlServer(ConnectionString)
@@ -28,8 +28,11 @@ namespace Product.Api.Tests
 
         public async Task DisposeAsync()
         {
-            await Container.StopAsync();
-            await Container.DisposeAsync();
+            if (_container is not null)
+            {
+                await _container.StopAsync();
+                await _container.DisposeAsync();
+            }
         }
     }
 }

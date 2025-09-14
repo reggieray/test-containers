@@ -15,17 +15,16 @@ namespace Product.Api.Tests.Controllers
             .Options;
         }
 
-        [Fact]
-        public async Task PostAndGetProduct_UsingRealSqlServer_Works()
+        [Theory]
+        [MemberData(nameof(Products))]
+        public async Task PostAndGetProduct_UsingSqlServer_Works(Models.Product product)
         {
             // Arrange: create a fresh DbContext for test
             await using var context = new AppDbContext(_options);
             var controller = new ProductsController(context);
 
-            var newProduct = new Models.Product { Name = "Direct SQL Test", Price = 45.67m };
-
             // Act: POST
-            var postResult = await controller.PostProduct(newProduct);
+            var postResult = await controller.PostProduct(product);
 
             // Assert created product
             var created = (postResult.Result as Microsoft.AspNetCore.Mvc.CreatedAtActionResult)?.Value as Models.Product;
@@ -37,7 +36,14 @@ namespace Product.Api.Tests.Controllers
 
             var fetched = getResult.Value;
             fetched.Should().NotBeNull();
-            fetched!.Name.Should().Be("Direct SQL Test");
+            fetched!.Name.Should().Be(product.Name);
+            fetched.Price.Should().Be(product.Price);
         }
+
+        public static IEnumerable<object[]> Products =>
+        [
+            [new Models.Product { Name = "Direct SQL Test", Price = 45.67m }],
+            [new Models.Product { Name = "2nd Product", Price = 78.99m }]
+        ];
     }
 }
