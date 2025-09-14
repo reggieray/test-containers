@@ -3,6 +3,10 @@
 - This is a simple .NET 9 Web API used as an example of how to use [Testcontainers](https://testcontainers.com/).
 - This project uses this specific [Microsoft SQL Server](https://dotnet.testcontainers.org/modules/mssql/) module.
 
+Below is demo of an instance of MSSQL server spinning up in the background in docker while the tests are executed.
+
+![Demo](./docs/test-containers-demo.gif)
+
 ## Getting Started 🚀
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
